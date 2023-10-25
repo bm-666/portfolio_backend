@@ -1,0 +1,55 @@
+{% extends 'index.html' %}
+{% load i18n admin_modify  %}
+
+{% block raiting %}
+{% block to_day_raiting %}
+<div class="container text-left">
+    <div class="raiting">
+
+        <p class="p-raiting">Дата</p>
+        <p class="p-raiting">Рейтинг</p>
+        <p class="p-raiting">Отзывы</p>
+        <p class="p-raiting">Рекомендуют</p>
+
+    </div>
+    <div class="raiting text-left" id="raiting">
+        <p class="p-raiting" id="create_at_date">{{data.create_at}}</p>
+        <p class="p-raiting" id="raiting_date">{{data.raiting}}</p>
+        <p class="p-raiting" id="count_comments_date">{{data.count_comments}}</p>
+        <p class="p-raiting" id="recommend_date">{{data.recommend}}</p>
+    </div>
+    <div class="date">
+        <form method="POST" id="dateform" class="dateform">
+            {% csrf_token %}
+            {% for field in form %}
+            {{field}}
+            {% endfor %}
+        </form>
+
+    </div>
+</div>
+{% endblock %}
+<br>
+{%block all_raiting %}
+<div class="container">
+
+    <div class="text-center ">
+        <h4> История рейтинга</h4>
+    </div>
+    <div class="raiting text-left">
+        {% for item in raiting %}
+        <div class="text-left">
+            <a href="{{item.get_absolute_url}}/rating/{{item.create_at}}"><p class="p-raiting" id="create_at">{{item.create_at|date:"d.m.Y"}}</p>
+            <p class="p-raiting" id="raiting">{{item.raiting}}</p>
+            <p class="p-raiting" id="count_comments">{{item.count_comments}}</p>
+            <p class="p-raiting" id="recommend">{{item.recommend}}</p>
+
+            </a>
+        </div>
+        <br>
+        {%endfor%}
+    </div>
+</div>
+{% endblock %}
+
+{% endblock%}
